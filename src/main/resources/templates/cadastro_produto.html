@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.com" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Produto | Mercado ON</title>
+    <link rel="stylesheet" th:href="@{/css/cadastro_produto.css}">
+</head>
+<body>
+    <form id="cadastro_form">
+        <table id="tabela_form">
+            <tr>
+                <td>Nome</td>
+                <td>
+                    <input id="nome" name="nome" type="text" >
+                </td>
+            </tr>
+            <tr>
+                <td>Marca</td>
+                <td>
+                    <input id="marca" name="marca" type="text" >
+                </td>
+            </tr>
+            <tr>
+                <td>Categoria</td>
+                <td>
+                    <select name="categoria" id="categoria">
+                        <option value="0">ELETRÔNICOS</option>
+                        <option value="1">ELETRODOMÉSTICOS</option>
+                        <option value="2">VEÍCULOS</option>
+                        <option value="3">ALIMENTOS</option>
+                        <option value="4">AGRO</option>
+                        <option value="5">ACESSÓRIOS</option>
+                        <option value="6">ROUPAS</option>
+                        <option value="7">CALÇADOS</option>
+                        <option value="8">IMÓVEIS</option>
+                        <option value="9">ESPORTES</option>
+                        <option value="10">FERRAMENTAS</option>
+                        <option value="11">INFORMÁTICA</option>
+                        <option value="12">SERVICOS</option>
+                        <option value="13">OUTROS</option>
+                    </select>
+                </td>
+            </tr> 
+            <tr>
+                <td>Modelo</td>
+                <td>
+                    <input id="modelo" name="modelo" type="text" >
+                </td>
+            </tr>
+            <tr>
+                <td>Cor</td>
+                <td>
+                    <input id="cor" name="cor" type="text" >
+                </td>
+            </tr>
+            <tr>
+                <td>Descrição</td>
+                <td>
+                    <input id="descricao" name="descricao" type="text" >
+                </td>
+            </tr>
+            <tr>
+                <td>Descrição Técnica</td>
+                <td>
+                    <input id="descricao_tecnica" name="descricao_tecnica" type="text" >
+                </td>
+            </tr>
+            <tr>
+                <td>Preço</td>
+                <td>
+                    <input id="preco" name="preco" type="text" >
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input value="Cadastrar" type="button" onclick="cadastrar()">
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <div id="erro" class="erro"></div>
+
+    <script th:src="@{/js/cadastro_produto.js}"></script>
+</body>
+</html>

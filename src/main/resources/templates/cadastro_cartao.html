@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.com" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Cartão | Mercado ON</title>
+    <link rel="stylesheet" th:href="@{/css/cadastro_cartao.css}">
+</head>
+<body>
+    <form id="cadastro_form">
+        <table id="tabela_form">
+            <tr>
+                <td>Nome Usuário</td>
+                <td>
+                    <input id="nome_usuario" name="nome_usuario" type="text" >
+                </td>
+            </tr>
+            <tr>
+                <td>Número</td>
+                <td>
+                    <input id="numero" name="numero" type="text" >
+                </td>
+            </tr> 
+            <tr>
+                <td>CVV</td>
+                <td>
+                    <input id="cvv" name="cvv" type="text" >
+                </td>
+            </tr> 
+            <tr>
+                <td>Validade</td>
+                <td>
+                    <input id="validade" name="validade" type="text" >
+                </td>
+            </tr> 
+            <tr>
+                <td>Bandeira</td>
+                <td>
+                    <select name="bandeira" id="bandeira">
+                        <option value="0">MASTERCARD</option>
+                        <option value="1">VISA</option>
+                        <option value="2">ELO</option>
+                        <option value="3">ALELO</option>
+                    </select>
+                </td>
+            </tr> 
+            <tr>
+                <td>Função</td>
+                <td>
+                    <select name="funcao" id="funcao">
+                        <option value="0">DEBITO</option>
+                        <option value="1">CREDITO</option>
+                    </select>
+                </td>
+            </tr> 
+            <tr>
+                <td>
+                    <input value="Cadastrar" type="button" onclick="cadastrar()">
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <div id="erro" class="erro"></div>
+
+    <script th:src="@{/js/cadastro_cartao.js}"></script>
+</body>
+</html>

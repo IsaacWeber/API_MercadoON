@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form id="login_form">
+        <table id="tabela_form">
+            <tr>
+                <td>Email</td>
+                <td>
+                    <input id="email" name="email" type="email" >
+                </td>
+            </tr>
+            <tr>
+                <td>Senha</td>
+                <td>
+                    <input id="senha" name="senha" type="password" >
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input value="Entrar" type="button" onclick="entrar()">
+                </td>
+            </tr>
+        </table>
+    </form>
+
+    <script th:src="@{/js/login.js}"></script>
+</body>
+</html>

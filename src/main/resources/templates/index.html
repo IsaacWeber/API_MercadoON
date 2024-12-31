@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Início | MercadoON</title>
+    <link rel="stylesheet" href="@{/css/index.css}">
+</head>
+<body>
+    <h2>Bem-Vindo ao MercadoON</h2>
+    <h4>Encontre e anuncie produtos novos e usados por todo o Brasil e anuncie seus produto</h4>
+
+    <table>
+        <tr>
+            <button onclick="window.location.replace('/cliente/login')">Entrar</button>
+        </tr>
+        <tr>
+            <button onclick="window.location.replace('/cliente/cadastro')">Cadastre-se</button>
+        </tr>
+    </table>
+    <script th:src="@{/js/index.js}"></script>
+</body>
+</html>
