@@ -36,35 +36,8 @@ public class ProdutoService {
                 .collect(Collectors.toList());
     }
 
-    public ProdutoDto add(Produto produto, List<MultipartFile> arquivosMultipart) {
+    public ProdutoDto add(Produto produto) {
         produto.setId(null);
-
-        if(arquivosMultipart != null) {
-            // Pega somente arquivos de imagens
-            List<Arquivo> imagens =
-                    arquivosMultipart.stream()
-                            .filter(a -> a != null)
-                            .filter(a -> a.getContentType().startsWith("image/"))
-                            .map(a -> {
-                                try {
-                                    return new Arquivo(StringUtils.cleanPath(
-                                            a.getOriginalFilename()),
-                                            a.getContentType(),
-                                            a.getBytes());
-                                } catch (IOException e) {
-                                    throw new RuntimeException("Erro adicionando arquivo! Verifique os dados.");
-                                }
-                            })
-                            .collect(Collectors.toList());
-
-            produto.setImagens(new ArrayList<>(imagens));
-
-            for (Arquivo imagem : imagens) {
-                imagem.setProdutos(new ArrayList<>());
-                imagem.getProdutos().add(produto);
-            }
-        }
-
         return modelMapper.map(produtoRepository.save(produto), ProdutoDto.class);
     }
 
@@ -90,9 +63,5 @@ public class ProdutoService {
 
     public void deletarTodos() {
         produtoRepository.deleteAll();
-    }
-
-    public boolean existe(Long id) {
-        return produtoRepository.existsById(id);
     }
 }

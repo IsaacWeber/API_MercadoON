@@ -7,7 +7,7 @@
     <link rel="stylesheet" th:href="@{/css/cadastro_produto.css}">
 </head>
 <body>
-    <form id="cadastro_form">
+    <form id="cadastro_form" method="POST" th:action="@{/api/arquivo/upload/11}" enctype="multipart/form-data" onsubmit="cadastrar()">
         <table id="tabela_form">
             <tr>
                 <td>Nome</td>
@@ -73,8 +73,14 @@
                 </td>
             </tr>
             <tr>
+                <td>Imagens</td>
                 <td>
-                    <input value="Cadastrar" type="button" onclick="cadastrar()">
+                    <input id="imagens" name="arquivos" type="file" accept=".gif, .jpg, .jpeg, .png" multiple>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input value="Cadastrar" type="submit">
                 </td>
             </tr>
         </table>

@@ -33,9 +33,8 @@ public class ProdutoRestController {
     }
 
     @PostMapping
-    public ResponseEntity<ProdutoDto> add(@Valid @RequestBody Produto produto,
-                                        @RequestParam(value = "arquivos", required = false)List<MultipartFile> arquivosMultipart) {
-        return new ResponseEntity<>(produtoService.add(produto, arquivosMultipart), HttpStatus.CREATED);
+    public ResponseEntity<ProdutoDto> add(@Valid @RequestBody Produto produto) {
+        return new ResponseEntity<>(produtoService.add(produto), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
