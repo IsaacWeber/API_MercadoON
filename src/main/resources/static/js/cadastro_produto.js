@@ -1,9 +1,117 @@
-const imagens = [];
-const elementoImagens = document.getElementById("imagens");
+const form = document.getElementById("cadastro_form");
+const imagensTD = document.getElementById('imagens_td');
+const divImagensTD = document.getElementById('div_imagens_enviadas');
 
-elementoImagens.onchange = () => {
-  imagens.push(elementoImagens.files[0]);
-};
+const divNomesImagens = [];
+let contadorImagens = 0;
+
+const LIMITE_IMAGENS = 3;
+const botoesImagens = [];
+let inputEscolher = null;
+let divNomeImagem = null;
+
+for(let i = 0; i < LIMITE_IMAGENS; ++i){
+  inputEscolher = document.createElement('input');
+  inputEscolher.setAttribute('type', 'file');
+  inputEscolher.setAttribute('name', 'arquivos');
+  inputEscolher.setAttribute('accept', '.gif, .jpg, .jpeg, .png');
+  inputEscolher.setAttribute('multiple', 'yes');
+  botoesImagens.push(inputEscolher);
+
+  divNomeImagem = document.createElement('div');
+  divNomeImagem.setAttribute('class', 'div_nomes_imagens');
+  //divNomeImagem.innerText = "TEST";
+  divNomesImagens.push(divNomeImagem);
+  divImagensTD.appendChild(divNomeImagem);
+}
+
+
+
+for(let i = 0; i < LIMITE_IMAGENS; ++i) { // Colocando Handlers
+  // Handler para botoes imagem
+  botoesImagens[i].onchange = () => {
+    if(!ehUltimoBotaoImagem()) {
+      // Muda seletor de imagens do lugar
+      colocarForm(botoesImagens[i]);
+      colocarTD(pegarBotaoImagensDisponivel());
+    }
+
+    ++contadorImagens;
+    atualizarImagensEnviadas(botoesImagens[i].files[0].name);
+
+    if(contadorImagens == LIMITE_IMAGENS) {
+      desabilitarBotaoImagem();
+    }
+  }
+
+  // Handler para div botoes imagem
+  divNomesImagens[i].onclick = () => {
+    for(let j = 0; j < botoesImagens.length; ++j) {
+      if(botoesImagens[j].files[0] != null && botoesImagens[j].files[0].name === divNomesImagens[i].innerText) {
+        divNomesImagens[i].innerText = '';
+        botoesImagens[j].value = '';
+
+        colocarForm(document.querySelector('#imagens_td input'));
+        colocarTD(botoesImagens[j]);
+
+        --contadorImagens;
+        break;
+      }
+    }
+  }
+
+}
+
+imagensTD.appendChild(botoesImagens[0]);
+
+function desabilitarBotaoImagem() {
+  document.querySelector('#imagens_td input').disabled = true;
+}
+
+function colocarTD(e) {
+  e.disabled = false;
+  e.style.opacity = '1';
+  imagensTD.appendChild(e);
+}
+
+function colocarForm(e) {
+  e.disabled = true;
+  e.style.opacity = '0';
+  form.appendChild(e);
+}
+
+function ehUltimoBotaoImagem() {
+  for(let i = 0; i < botoesImagens.length; ++i) {
+    if(botoesImagens[i].files[0] == null) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+function atualizarImagensEnviadas(nome) {
+  for(let i = 0; i < divNomesImagens.length; ++i) {
+    if(divNomesImagens[i].innerText === '') {
+      divNomesImagens[i].innerText = nome;
+      break;
+    }
+  }
+}
+
+function pegarBotaoImagensDisponivel() {
+  for(let i = 0; i < botoesImagens.length; ++i) {
+    if(botoesImagens[i].files[0] == null) {
+      return botoesImagens[i];
+    }
+  }
+}
+
+function prepararImagens() {
+  for(let i = 0; i < botoesImagens.length; ++i) {
+    botoesImagens[i].disabled = false;
+  }
+}
 
 function cadastrar() {
   

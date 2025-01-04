@@ -47,6 +47,7 @@ public class ArquivoService {
     }
 
     public void add(Long produtoId, List<MultipartFile> arquivosMultipart) {
+        if(arquivosMultipart.size() > 10) throw new RuntimeException("O Produto não pode ter mais de 10 imagens");
         Produto produto = produtoRepository.findById(produtoId)
                 .orElseThrow(() -> new ProdutoNotFoundException("Produto não encontrado para id = " + produtoId));
 
