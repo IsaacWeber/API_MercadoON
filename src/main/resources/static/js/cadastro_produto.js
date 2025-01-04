@@ -107,10 +107,17 @@ function pegarBotaoImagensDisponivel() {
   }
 }
 
-function prepararImagens() {
+function prepararImagens(produtoJson) {
   for(let i = 0; i < botoesImagens.length; ++i) {
     botoesImagens[i].disabled = false;
   }
+  
+  form.action = '/api/arquivo/upload/' + produtoJson.id;
+  form.onsubmit = () => {
+    window.location.replace("/produto/cadastrado");
+  }
+  
+  form.submit();
 }
 
 function cadastrar() {
@@ -144,8 +151,16 @@ function cadastrar() {
       }
     })
     .then((response) => {
+
       if(response.status == 201) {
+        response.json().then(produtoJson => {
+          if(produtoJson != null && contadorImagens > 0) {
+            prepararImagens(produtoJson);
+          }
+        });
+
         window.location.replace("/produto/cadastrado")
+
       } else { // tem erro
         response.json().then(json => {
           erroDiv.innerText = (json != null && json.campos != null) 

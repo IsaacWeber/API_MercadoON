@@ -1,11 +1,13 @@
 package br.com.mercadoon.api.service;
 
+import br.com.mercadoon.api.dto.ProdutoDto;
 import br.com.mercadoon.api.entity.Arquivo;
 import br.com.mercadoon.api.entity.Produto;
 import br.com.mercadoon.api.exception.ArquivoNotFoundException;
 import br.com.mercadoon.api.exception.ProdutoNotFoundException;
 import br.com.mercadoon.api.repository.ArquivoRepository;
 import br.com.mercadoon.api.repository.ProdutoRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,10 +21,12 @@ import java.util.stream.Collectors;
 public class ArquivoService {
     private ArquivoRepository arquivoRepository;
     private ProdutoRepository produtoRepository;
+    private ModelMapper modelMapper;
 
-    public ArquivoService(ArquivoRepository arquivoRepository, ProdutoRepository produtoRepository) {
+    public ArquivoService(ArquivoRepository arquivoRepository, ProdutoRepository produtoRepository, ModelMapper modelMapper) {
         this.arquivoRepository = arquivoRepository;
         this.produtoRepository = produtoRepository;
+        this.modelMapper = modelMapper;
     }
 
     public Arquivo add(MultipartFile arquivoMultipart) {
@@ -46,7 +50,7 @@ public class ArquivoService {
                 .orElseThrow(() -> new ArquivoNotFoundException("Arquivo não encontrado para id = " + id));
     }
 
-    public void add(Long produtoId, List<MultipartFile> arquivosMultipart) {
+    public ProdutoDto add(Long produtoId, List<MultipartFile> arquivosMultipart) {
         if(arquivosMultipart.size() > 10) throw new RuntimeException("O Produto não pode ter mais de 10 imagens");
         Produto produto = produtoRepository.findById(produtoId)
                 .orElseThrow(() -> new ProdutoNotFoundException("Produto não encontrado para id = " + produtoId));
@@ -72,7 +76,7 @@ public class ArquivoService {
             produto.setImagens(new ArrayList<>(imagens));
         }
 
-        produtoRepository.save(produto);
+        return modelMapper.map(produtoRepository.save(produto), ProdutoDto.class);
     }
 }
 

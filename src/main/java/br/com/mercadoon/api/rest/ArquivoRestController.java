@@ -1,11 +1,16 @@
 package br.com.mercadoon.api.rest;
 
+import br.com.mercadoon.api.dto.ProdutoDto;
 import br.com.mercadoon.api.entity.Arquivo;
+import br.com.mercadoon.api.entity.Produto;
 import br.com.mercadoon.api.service.ArquivoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 
@@ -29,8 +34,19 @@ public class ArquivoRestController {
     }
 
     @PostMapping("/upload/{produtoId}")
-    public void upload(@PathVariable Long produtoId, @RequestParam(value = "arquivos", required = false)List<MultipartFile> arquivosMultipart) {
-        arquivoService.add(produtoId, arquivosMultipart);
+    public Object upload(@PathVariable Long produtoId,
+                         @RequestParam(value = "arquivos", required = false) List<MultipartFile> arquivosMultipart,
+                         @RequestParam(value = "from_model", required = false) Integer fromModel,
+                        RedirectAttributes redirectAttributes) {
+
+       ProdutoDto produtoDto = arquivoService.add(produtoId, arquivosMultipart);
+       if(fromModel == 1) {
+            RedirectView redirectView = new RedirectView("/produto/cadastrado", true);
+            redirectAttributes.addFlashAttribute("produto", produtoDto);
+            return redirectView;
+       }
+
+       return null;
     }
 
 }

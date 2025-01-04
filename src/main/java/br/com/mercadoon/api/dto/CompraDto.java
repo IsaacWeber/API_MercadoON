@@ -10,6 +10,7 @@ import java.util.List;
 @Getter
 @Setter
 public class CompraDto {
+    private Long id;
     private ClienteDto cliente;
     private List<ProdutoCompraDto> produtos;
     private CartaoCompraDto cartao;

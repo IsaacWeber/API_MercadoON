@@ -8,6 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class CartaoDto {
+    private Long id;
     private String nomeUsuario;
     private String numero;
     private BandeiraCartao bandeira;
