@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.com" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home | Mercado ON</title>
+</head>
+<body>
+    <h2 th:text="${cliente.nome}"></h2>
+    <h4 th:text="${id}"></h4>  
+
+    <script th:inline="javascript">
+        console.log([[${cliente}]]);
+    </script>
+</body>
+</html>

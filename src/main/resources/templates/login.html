@@ -1,33 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.com" lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login | Mercado ON</title>
+    <link rel="stylesheet" th:href="@{/css/login.css}">
 </head>
 <body>
-    <form id="login_form">
+    <form id="login_form" th:action="@{/cliente/fazer_login}" method="post">
         <table id="tabela_form">
             <tr>
                 <td>Email</td>
                 <td>
-                    <input id="email" name="email" type="email" >
+                    <input id="email" name="email" type="email">
                 </td>
             </tr>
             <tr>
                 <td>Senha</td>
                 <td>
-                    <input id="senha" name="senha" type="password" >
+                    <input id="senha" name="senha" type="password">
                 </td>
             </tr>
             <tr>
                 <td>
-                    <input value="Entrar" type="button" onclick="entrar()">
+                    <input value="Entrar" type="submit">
                 </td>
             </tr>
         </table>
+        <span class="erro" th:text="${erro_msg}"></span>
     </form>
 
     <script th:src="@{/js/login.js}"></script>
+    <script th:inline="javascript">
+        const email = [[${email}]];
+        console.log("EMAIL = " + email);
+        if(email) {
+            document.getElementById("email").value = email;
+        }
+    </script>
 </body>
 </html>
