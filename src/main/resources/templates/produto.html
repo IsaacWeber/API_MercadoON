@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.com" lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produto Cadastrado | Mercado ON</title>
+    <style>
+        span {
+            display: block;
+        }
+
+        .img-thumbnail {
+            width: 400px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="titulo">
+        <span id="nome" th:text="${produto.nome}"></span>
+        <span id="marca" th:text="${produto.marca}"></span>
+    </div>
+    <div class="div_imagem" th:each="imagem : ${produto.imagens}">   
+        <img class='img-thumbnail' th:src="'data:image/*;base64,' + ${imageUtil.getImageData(imagem.data)}" th:alt="${imagem.nome}"/>
+    </div>
+    <span id="categoria" th:text="${produto.categoria}"></span>
+    <span id="modelo" th:text="${produto.modelo}"></span>
+    <span id="cor" th:text="${produto.cor}"></span>
+    <span id="descricao" th:text="${produto.descricao}"></span>
+    <span id="descricao_tecnica" th:text="${produto.descricaoTecnica}"></span>
+    <span id="preco" th:text="${produto.preco}"></span>
+   <!-- <img th:src="*{'data:image/png;base64,'+image}" alt="IMAGEM NAO FUNCIONA"/> -->
+</body>
+</html>

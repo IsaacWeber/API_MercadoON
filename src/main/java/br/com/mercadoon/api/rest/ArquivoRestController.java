@@ -36,17 +36,14 @@ public class ArquivoRestController {
     @PostMapping("/upload/{produtoId}")
     public Object upload(@PathVariable Long produtoId,
                          @RequestParam(value = "arquivos", required = false) List<MultipartFile> arquivosMultipart,
-                         @RequestParam(value = "from_model", required = false) Integer fromModel,
-                        RedirectAttributes redirectAttributes) {
+                         @RequestParam(value = "from_model", required = false) Integer fromModel) {
 
-       ProdutoDto produtoDto = arquivoService.add(produtoId, arquivosMultipart);
-       if(fromModel == 1) {
-            RedirectView redirectView = new RedirectView("/produto/cadastrado", true);
-            redirectAttributes.addFlashAttribute("produto", produtoDto);
-            return redirectView;
-       }
+        ProdutoDto produtoDto = arquivoService.add(produtoId, arquivosMultipart);
+        if(fromModel == 1) {
+        return new ModelAndView("redirect:/produto/exibir/" + produtoDto.getId());
+        }
 
-       return null;
+        return new ResponseEntity<>(produtoDto, HttpStatus.CREATED);
     }
 
 }

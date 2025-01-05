@@ -1,8 +1,11 @@
 package br.com.mercadoon.api.dto;
 
+import br.com.mercadoon.api.entity.Arquivo;
 import br.com.mercadoon.api.enumeration.CategoriaProduto;
 import lombok.Getter;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -16,4 +19,5 @@ public class ProdutoDto {
     private String descricao;
     private String descricaoTecnica;
     private Double preco;
+    private List<Arquivo> imagens;
 }
