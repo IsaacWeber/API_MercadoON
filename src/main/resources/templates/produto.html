@@ -16,7 +16,6 @@
     </style>
 </head>
 <body>
-    
     <div id="titulo">
         <span id="nome" th:text="${produto.nome}"></span>
         <span id="marca" th:text="${produto.marca}"></span>
@@ -31,5 +30,7 @@
     <span id="descricao_tecnica" th:text="${produto.descricaoTecnica}"></span>
     <span id="preco" th:text="${produto.preco}"></span>
    <!-- <img th:src="*{'data:image/png;base64,'+image}" alt="IMAGEM NAO FUNCIONA"/> -->
+
+   <button onclick="window.location.href='/cliente/login'">Voltar Painel</button>
 </body>
 </html>

@@ -2,7 +2,10 @@ package br.com.mercadoon.domain.controller;
 
 import br.com.mercadoon.api.dto.ClienteDto;
 import br.com.mercadoon.api.exception.LoginException;
+import br.com.mercadoon.api.repository.ProdutoRepository;
+import br.com.mercadoon.api.service.ClienteService;
 import br.com.mercadoon.domain.service.LoginService;
+import br.com.mercadoon.util.ImageUtil;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -13,9 +16,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @RequestMapping("/cliente")
 public class ClienteController {
     private LoginService loginService;
+    private ClienteService clienteService;
+    private ProdutoRepository produtoRepository;
 
-    public ClienteController(LoginService loginService) {
+    public ClienteController(ClienteService clienteService, LoginService loginService, ProdutoRepository produtoRepository) {
+        this.clienteService = clienteService;
         this.loginService = loginService;
+        this.produtoRepository = produtoRepository;
     }
 
     @GetMapping("/cadastrar")
@@ -31,11 +38,9 @@ public class ClienteController {
     @GetMapping("/login")
     public ModelAndView login(@ModelAttribute("email") String email,
                               @ModelAttribute("erro_msg") String erroMsg,
-                              HttpSession session,
-                              RedirectAttributes redirectAttributes) {
+                              HttpSession session) {
 
         if(session.getAttribute("cliente") != null) {
-            redirectAttributes.addFlashAttribute("cliente", session.getAttribute("cliente"));
             return new ModelAndView("redirect:/cliente/home");
         }
 
@@ -46,11 +51,19 @@ public class ClienteController {
     }
 
     @GetMapping("/home")
-    public ModelAndView home(@ModelAttribute("cliente") ClienteDto cliente) {
-        ModelAndView mv = new ModelAndView();
-        mv.setViewName("entrada_cliente");
-        mv.addObject("cliente", cliente);
+    public ModelAndView home(HttpSession session) {
+        if(session.getAttribute("cliente") == null) {
+            return new ModelAndView("erro");
+        }
 
+        ClienteDto clienteDto = (ClienteDto)session.getAttribute("cliente");
+
+        clienteDto.setProdutos(produtoRepository.findAllByClienteId(clienteDto.getId()));
+        session.setAttribute("cliente", clienteService.buscar(clienteDto.getId())); // Atualiza cliente na secao
+
+        ModelAndView mv = new ModelAndView("entrada_cliente");
+        mv.addObject("cliente", clienteDto);
+        mv.addObject("imageUtil", new ImageUtil());
         return mv;
     }
 

@@ -89,10 +89,19 @@
             </tr>
         </table>
         <input name="from_model" type="hidden" value="1">
+        <input id="cliente_id" name="cliente_id" type="hidden" th:value="${cliente.id}">
     </form>
 
     <div id="erro" class="erro"></div>
 
     <script th:src="@{/js/cadastro_produto.js}"></script>
+    <script th:inline="javascript">
+        const cliente = [[${cliente}]];
+        console.log("CLIENTE = " + cliente);
+        if(cliente) {
+            document.getElementById("cliente_id").value = cliente.id;
+        }
+    </script>
+
 </body>
 </html>

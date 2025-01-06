@@ -63,4 +63,8 @@ public class Produto {
             joinColumns = @JoinColumn(name = "produto_id"),
             inverseJoinColumns = @JoinColumn(name = "arquivo_id"))
     private List<Arquivo> imagens;
+
+    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.DETACH, CascadeType.MERGE, CascadeType.REFRESH})
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
 }

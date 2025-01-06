@@ -2,8 +2,11 @@ package br.com.mercadoon.api.service;
 
 import br.com.mercadoon.api.dto.ProdutoDto;
 import br.com.mercadoon.api.entity.Arquivo;
+import br.com.mercadoon.api.entity.Cliente;
 import br.com.mercadoon.api.entity.Produto;
+import br.com.mercadoon.api.exception.ClienteNotFoundException;
 import br.com.mercadoon.api.exception.ProdutoNotFoundException;
+import br.com.mercadoon.api.repository.ClienteRepository;
 import br.com.mercadoon.api.repository.ProdutoRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +24,13 @@ public class ProdutoService {
     private ProdutoRepository produtoRepository;
     private ModelMapper modelMapper;
     private ArquivoService arquivoService;
+    private ClienteRepository clienteRepository;
 
-    @Autowired
-    public ProdutoService(ProdutoRepository produtoRepository, ModelMapper modelMapper, ArquivoService arquivoService) {
-        this.produtoRepository = produtoRepository;
-        this.modelMapper = modelMapper;
+    public ProdutoService(ArquivoService arquivoService, ClienteRepository clienteRepository, ModelMapper modelMapper, ProdutoRepository produtoRepository) {
         this.arquivoService = arquivoService;
+        this.clienteRepository = clienteRepository;
+        this.modelMapper = modelMapper;
+        this.produtoRepository = produtoRepository;
     }
 
     public List<ProdutoDto> listar() {
@@ -36,8 +40,11 @@ public class ProdutoService {
                 .collect(Collectors.toList());
     }
 
-    public ProdutoDto add(Produto produto) {
+    public ProdutoDto add(Long clienteId, Produto produto) {
+        Cliente cliente = clienteRepository.findById(clienteId).orElseThrow(() -> new ClienteNotFoundException("Cliente não encontrado para id = " + clienteId));
+
         produto.setId(null);
+        produto.setCliente(cliente);
         return modelMapper.map(produtoRepository.save(produto), ProdutoDto.class);
     }
 

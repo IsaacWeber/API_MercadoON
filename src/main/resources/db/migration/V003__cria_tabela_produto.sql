@@ -9,5 +9,7 @@ create table produto(
     descricao varchar(2000) not null,
     descricao_tecnica varchar(2000) not null,
     preco double(9,2) not null,
-    primary key(id)
+    cliente_id bigint,
+    primary key(id),
+    foreign key(cliente_id) references cliente(id)
 );

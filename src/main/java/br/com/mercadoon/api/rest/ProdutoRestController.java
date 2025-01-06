@@ -32,9 +32,9 @@ public class ProdutoRestController {
         return produtoService.buscar(id);
     }
 
-    @PostMapping
-    public ResponseEntity<ProdutoDto> add(@Valid @RequestBody Produto produto) {
-        return new ResponseEntity<>(produtoService.add(produto), HttpStatus.CREATED);
+    @PostMapping("/{clienteId}")
+    public ResponseEntity<ProdutoDto> add(@PathVariable Long clienteId, @Valid @RequestBody Produto produto) {
+        return new ResponseEntity<>(produtoService.add(clienteId, produto), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")

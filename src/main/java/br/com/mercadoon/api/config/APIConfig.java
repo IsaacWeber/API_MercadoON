@@ -14,7 +14,7 @@ public class APIConfig {
     }
 
     //bean para reparar o migration do flyway.
-    /*
+
     @Bean
     public FlywayMigrationStrategy cleanMigrationStrategy() {
         return flyway -> {
@@ -22,6 +22,6 @@ public class APIConfig {
             flyway.migrate();
         };
     }
-    */
+
 
 }

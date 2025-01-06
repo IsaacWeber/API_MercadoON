@@ -133,8 +133,9 @@ function cadastrar() {
 
   let erroDiv = document.getElementById("erro");
   
+  const clienteId = document.getElementById("cliente_id").value;
   // Cadastra Produto
-  fetch("/api/produto", {
+  fetch("/api/produto/" + clienteId, {
       method: "POST",
       body: JSON.stringify({
           "nome": nome,
@@ -144,7 +145,7 @@ function cadastrar() {
           "cor": cor,
           "descricao": descricao,
           "descricaoTecnica": descricaoTecnica,
-          "preco": preco
+          "preco": preco,
       }),
       headers: {
         "Content-type": "application/json; charset=UTF-8"
