@@ -5,5 +5,5 @@ create table arquivo(
     nome varchar(100) not null,
     tipo varchar(100) not null,
     data longblob,
-    primary key(id),
+    primary key(id)
 );

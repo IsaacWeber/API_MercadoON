@@ -30,7 +30,14 @@ public class ClienteController {
 
     @GetMapping("/login")
     public ModelAndView login(@ModelAttribute("email") String email,
-                              @ModelAttribute("erro_msg") String erroMsg) {
+                              @ModelAttribute("erro_msg") String erroMsg,
+                              HttpSession session,
+                              RedirectAttributes redirectAttributes) {
+
+        if(session.getAttribute("cliente") != null) {
+            redirectAttributes.addFlashAttribute("cliente", session.getAttribute("cliente"));
+            return new ModelAndView("redirect:/cliente/home");
+        }
 
         ModelAndView mv = new ModelAndView("login");
         mv.addObject("email", email);
@@ -39,7 +46,7 @@ public class ClienteController {
     }
 
     @GetMapping("/home")
-    public ModelAndView home(@ModelAttribute("cliente") String cliente) {
+    public ModelAndView home(@ModelAttribute("cliente") ClienteDto cliente) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("entrada_cliente");
         mv.addObject("cliente", cliente);
@@ -68,5 +75,12 @@ public class ClienteController {
         }
 
         return mv;
+    }
+
+    @GetMapping("/sair")
+    public ModelAndView sair(HttpSession session) {
+        session.setAttribute("cliente", null);
+
+        return new ModelAndView("redirect:/");
     }
 }

@@ -9,6 +9,9 @@
     <h2 th:text="${cliente.nome}"></h2>
     <h4 th:text="${id}"></h4>  
 
+    <form th:action="@{/cliente/sair}">
+        <input type="submit" value="Sair">
+    </form>
     <script th:inline="javascript">
         console.log([[${cliente}]]);
     </script>
