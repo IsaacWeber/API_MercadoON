@@ -71,4 +71,11 @@ public class ProdutoService {
     public void deletarTodos() {
         produtoRepository.deleteAll();
     }
+
+    public List<ProdutoDto> pegarPorClienteId(Long id) {
+        return produtoRepository.findAllByClienteId(id)
+                                .stream()
+                                .map(p -> modelMapper.map(p, ProdutoDto.class))
+                                .collect(Collectors.toList());
+    }
 }

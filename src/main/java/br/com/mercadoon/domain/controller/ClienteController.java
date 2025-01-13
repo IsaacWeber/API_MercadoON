@@ -4,6 +4,7 @@ import br.com.mercadoon.api.dto.ClienteDto;
 import br.com.mercadoon.api.exception.LoginException;
 import br.com.mercadoon.api.repository.ProdutoRepository;
 import br.com.mercadoon.api.service.ClienteService;
+import br.com.mercadoon.api.service.ProdutoService;
 import br.com.mercadoon.domain.service.LoginService;
 import br.com.mercadoon.util.ImageUtil;
 import jakarta.servlet.http.HttpSession;
@@ -17,12 +18,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class ClienteController {
     private LoginService loginService;
     private ClienteService clienteService;
-    private ProdutoRepository produtoRepository;
+    private ProdutoService produtoService;
 
-    public ClienteController(ClienteService clienteService, LoginService loginService, ProdutoRepository produtoRepository) {
+    public ClienteController(ClienteService clienteService, LoginService loginService, ProdutoService produtoService) {
         this.clienteService = clienteService;
         this.loginService = loginService;
-        this.produtoRepository = produtoRepository;
+        this.produtoService = produtoService;
     }
 
     @GetMapping("/cadastrar")
@@ -58,7 +59,8 @@ public class ClienteController {
 
         ClienteDto clienteDto = (ClienteDto)session.getAttribute("cliente");
 
-        clienteDto.setProdutos(produtoRepository.findAllByClienteId(clienteDto.getId()));
+        clienteDto.setProdutos(produtoService.pegarPorClienteId(clienteDto.getId()));
+
         session.setAttribute("cliente", clienteService.buscar(clienteDto.getId())); // Atualiza cliente na secao
 
         ModelAndView mv = new ModelAndView("entrada_cliente");

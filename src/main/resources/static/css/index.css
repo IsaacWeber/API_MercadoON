@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+    font-family: "Poppins", serif;
+    font-weight: 400;
+    font-style: normal;
+
+    font-size: 15pt;
+    /* background-image: url('../images/logo.jpeg');
+    background-repeat: no-repeat;
+    background-size: auto auto 100% auto; */
+}
+
+.titulo {
+    font-size: 35pt;
+    background-color: rgba(0, 208, 255, 0.7);
+    color: white;
+    height: 100px;
+    text-align: center;
+    line-height: 100px;
+    width: 100%;
+}
+
+.logo {
+    margin:  0 0 0;
+    width: 200px;
+    height: 100px;
+    float: right;
+}
+
+.texto_propaganda {
+    margin: 30px 0 30px 0;
+    text-align: center; 
+    font-size: 20pt;
+}
+
+.botao {
+    font-size: 15pt;
+    padding: 5px;
+    margin: 0 30px 0 0;
+    border-radius: 5px;
+    border: 1px solid black;   
+}
+
+.botao:hover {
+    background-color: rgb(251, 210, 8);
+    color: white;
+}
+
+.div_botao {
+    margin: 30px 0 30px 0;
+    text-align: center;
+}
+
+.rodape {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: rgb(187, 185, 185);
+    text-align: center;
+    color: rgb(103, 96, 96);
+    font-size: 12pt;
+}

@@ -5,19 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Início | MercadoON</title>
     <link rel="stylesheet" href="@{/css/index.css}">
+    <link rel="stylesheet" href="../static/css/index.css">
+    <link rel="icon" th:href="@{/images/logo.jpeg}"/>
 </head>
 <body>
-    <h2>Bem-Vindo ao MercadoON</h2>
-    <h4>Encontre e anuncie produtos novos e usados por todo o Brasil e anuncie seus produto</h4>
+    <div class="titulo">
+        Mercado ON
+        <img class="logo" src="../static/images/logo.jpeg" alt="logo">
+    </div>
 
-    <table>
-        <tr>
-            <button onclick="window.location.href='/cliente/login'">Entrar</button>
-        </tr>
-        <tr>
-            <button onclick="window.location.href='/cliente/cadastrar'">Cadastre-se</button>
-        </tr>
-    </table>
+    <div class="conteudo">  
+        <div class="texto_propaganda">Encontre e anuncie produtos novos e usados por todo o Brasil.</div>
+
+        <div class="div_botao">
+            <button class="botao" onclick="window.location.href='/cliente/login'">Entrar</button>
+            <button class="botao" onclick="window.location.href='/cliente/cadastrar'">Cadastrar</button>
+        </div>
+    </div>
+    
+    <div class="rodape">
+        Fale conosco: (xx) xxxxx-xxxx
+    </div>
     <script th:src="@{/js/index.js}"></script>
 </body>
 </html>
