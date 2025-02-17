@@ -19,5 +19,5 @@ public class ProdutoDto {
     private String descricao;
     private String descricaoTecnica;
     private Double preco;
-    private List<Arquivo> imagens;
+    private ClienteResumoDto cliente;
 }

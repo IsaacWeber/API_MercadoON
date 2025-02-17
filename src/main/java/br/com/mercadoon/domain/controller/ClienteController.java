@@ -59,8 +59,6 @@ public class ClienteController {
 
         ClienteDto clienteDto = (ClienteDto)session.getAttribute("cliente");
 
-        clienteDto.setProdutos(produtoService.pegarPorClienteId(clienteDto.getId()));
-
         session.setAttribute("cliente", clienteService.buscar(clienteDto.getId())); // Atualiza cliente na secao
 
         ModelAndView mv = new ModelAndView("entrada_cliente");

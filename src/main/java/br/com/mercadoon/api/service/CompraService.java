@@ -79,14 +79,14 @@ public class CompraService {
 
         // Associa produtos
         try {
-            compra.setProdutos(compraRequestModel.getProdutosId()
+            compra.setProdutos(compraRequestModel
+                    .getProdutosId()
                     .stream()
                     .map(id -> produtoRepository.findById((Long) id)
                             .orElseThrow(() -> new ProdutoNotFoundException("Produto não encontrado para id = " + id)))
                     .collect(Collectors.toList()));
         } catch(ClassCastException e) {
-            throw new ProdutoNotFoundException("O id não pode ser convertido para Long. " +
-                    "Mude-o para um valor numérico inteiro.");
+            throw new ProdutoNotFoundException("O id não pode ser convertido para Long. Mude-o para um valor numérico inteiro.");
         }
 
         compra.setRealizacao(new Date(System.currentTimeMillis()));

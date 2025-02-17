@@ -11,26 +11,11 @@ import java.util.List;
 @Setter
 public class CompraDto {
     private Long id;
-    private ClienteDto cliente;
-    private List<ProdutoCompraDto> produtos;
-    private CartaoCompraDto cartao;
+    private ClienteResumoDto cliente;
+    private CartaoResumoDto cartao;
+    private List<ProdutoResumoDto> produtos;
     private Date realizacao;
     private Date previsaoEntrega;
     private StatusCompra status;
     private Date entrega;
-
-    @Getter
-    @Setter
-    static class ProdutoCompraDto {
-        private String nome;
-        private String marca;
-    }
-
-    @Getter
-    @Setter
-    static class CartaoCompraDto {
-        private String numero;
-        private String bandeira;
-    }
-
 }

@@ -1,5 +1,6 @@
 package br.com.mercadoon.api.service;
 
+import br.com.mercadoon.api.dto.ArquivoDto;
 import br.com.mercadoon.api.dto.ProdutoDto;
 import br.com.mercadoon.api.entity.Arquivo;
 import br.com.mercadoon.api.entity.Produto;
@@ -29,7 +30,7 @@ public class ArquivoService {
         this.modelMapper = modelMapper;
     }
 
-    public Arquivo add(MultipartFile arquivoMultipart) {
+    public ArquivoDto add(MultipartFile arquivoMultipart) {
         if(arquivoMultipart == null) throw new RuntimeException("Arquivo não pode ser nulo.");
 
         try {
@@ -39,15 +40,17 @@ public class ArquivoService {
             Arquivo arquivo = new Arquivo(StringUtils.cleanPath(arquivoMultipart.getOriginalFilename()),
                     arquivoMultipart.getContentType(), arquivoMultipart.getBytes());
 
-            return arquivoRepository.save(arquivo);
+            return modelMapper.map(arquivoRepository.save(arquivo), ArquivoDto.class);
         } catch (IOException e) {
             throw new RuntimeException("Erro adicionando arquivo! Verifique os dados.");
         }
     }
 
-    public Arquivo buscar(Long id) {
-        return arquivoRepository.findById(id)
-                .orElseThrow(() -> new ArquivoNotFoundException("Arquivo não encontrado para id = " + id));
+    public ArquivoDto buscar(Long id) {
+        return modelMapper.map(
+                arquivoRepository.findById(id)
+                .orElseThrow(() -> new ArquivoNotFoundException("Arquivo não encontrado para id = " + id)),
+                ArquivoDto.class);
     }
 
     public ProdutoDto add(Long produtoId, List<MultipartFile> arquivosMultipart) {
