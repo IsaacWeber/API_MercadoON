@@ -172,17 +172,6 @@ _Exemplo **Body**_
 | Deleta todos os cartões |
 
 
-* **Deletar Todos por Cliente**
-
-```http
-  DELETE /api/cartao/{cliente_id}
-```
-
-| Parâmetro | Tipo     | Descrição                       |
-| :-------- | :------- | :-------------------------------- |
-| `cliente_id`      | `string` | Deleta todos os cartões do cliente de id: `cliente_id` |
-
-
 ### PRODUTO
 
 * **Listar**
@@ -207,13 +196,13 @@ _Exemplo **Body**_
 * **Adicionar**
 
 ```http
-  POST /api/produto
+  POST /api/produto/{cliente_id}
 ```
 
 
-| Parâmetro | Tipo     | Descrição                       | 
-| :-------- | :------- | :-------------------------------- |
-| `Body`      | `JSON` | Cadastra produto |
+| Parâmetro 1 | Tipo | Parâmetro 2 |Tipo     | Descrição                       |
+| :-------- | :------ | :------- | :-------------------------------- | :------ |
+| `cliente_id` | `string` | `Body`|`JSON` | Adiciona produto para `cliente_id` |
 
 
 _Exemplo **Body**_
