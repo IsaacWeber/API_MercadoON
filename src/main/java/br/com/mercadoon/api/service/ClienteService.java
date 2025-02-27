@@ -2,8 +2,11 @@ package br.com.mercadoon.api.service;
 
 import br.com.mercadoon.api.dto.ClienteDto;
 import br.com.mercadoon.api.entity.Cliente;
+import br.com.mercadoon.api.entity.Usuario;
 import br.com.mercadoon.api.exception.ClienteNotFoundException;
+import br.com.mercadoon.api.exception.UsuarioNotFoundException;
 import br.com.mercadoon.api.repository.ClienteRepository;
+import br.com.mercadoon.api.repository.UsuarioRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,11 +18,14 @@ import java.util.stream.Collectors;
 @Service
 public class ClienteService {
     private ClienteRepository clienteRepository;
+    private UsuarioRepository usuarioRepository;
     private ModelMapper modelMapper;
+
     @Autowired
-    public ClienteService(ClienteRepository clienteRepository, ModelMapper modelMapper) {
+    public ClienteService(ClienteRepository clienteRepository, ModelMapper modelMapper, UsuarioRepository usuarioRepository) {
         this.clienteRepository = clienteRepository;
         this.modelMapper = modelMapper;
+        this.usuarioRepository = usuarioRepository;
     }
 
     public List<ClienteDto> listar() {
@@ -36,12 +42,17 @@ public class ClienteService {
                 ClienteDto.class);
     }
 
-    public ClienteDto add(Cliente cliente) {
+    public ClienteDto add(Cliente cliente, Long usuarioId) {
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+                                            .orElseThrow(() -> new UsuarioNotFoundException("Usuário não encontrado para id = " + usuarioId));
+
         cliente.setId(null);
         cliente.setMembroDesde(new Date(System.currentTimeMillis()));
 
         if(cliente.getCartoes() != null)
             cliente.getCartoes().forEach(c -> c.setCliente(cliente));
+
+        cliente.setUsuario(usuario);
 
         return modelMapper.map(clienteRepository.save(cliente), ClienteDto.class);
     }

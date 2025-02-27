@@ -1,7 +1,10 @@
 package br.com.mercadoon.api.service;
 
+import br.com.mercadoon.api.dto.UsuarioDto;
 import br.com.mercadoon.api.entity.Usuario;
+import br.com.mercadoon.api.exception.UsuarioNotFoundException;
 import br.com.mercadoon.api.repository.UsuarioRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,11 +21,13 @@ import java.util.List;
 public class UsuarioService implements UserDetailsService {
 
     private UsuarioRepository usuarioRepository;
+    private ModelMapper modelMapper;
     private BCryptPasswordEncoder encoder;
 
     @Autowired
-    public UsuarioService(UsuarioRepository usuarioRepository) {
+    public UsuarioService(UsuarioRepository usuarioRepository, ModelMapper modelMapper) {
         this.usuarioRepository = usuarioRepository;
+        this.modelMapper = modelMapper;
         this.encoder = new BCryptPasswordEncoder(12);
     }
 
@@ -42,13 +47,17 @@ public class UsuarioService implements UserDetailsService {
         return new CustomUserDetails(usuario);
     }
 
-    public Usuario buscar(Long id) {
-        return usuarioRepository.findById(id).orElseThrow(() -> new RuntimeException("Usuário não encontrado para id = " + id));
+    public UsuarioDto buscar(Long id) {
+        return modelMapper.map(
+                    usuarioRepository.findById(id)
+                    .orElseThrow(() -> new UsuarioNotFoundException("Usuário não encontrado para id = " + id)),
+                UsuarioDto.class);
     }
 
-    public Usuario add(Usuario usuario) {
+    public UsuarioDto add(Usuario usuario) {
+        usuario.setId(null);
         usuario.setSenha(encoder.encode(usuario.getSenha()));
-        return usuarioRepository.save(usuario);
+        return modelMapper.map(usuarioRepository.save(usuario), UsuarioDto.class);
     }
 
     class CustomUserDetails implements UserDetails {

@@ -38,10 +38,6 @@ public class Cliente {
     @NotEmpty(message = "Endereço não pode estar vazio.")
     private String endereco;
 
-    @Column(name = "senha")
-    @NotEmpty(message = "Senha não pode estar vazia.")
-    private String senha;
-
     @Column(name="membro_desde")
     private Date membroDesde;
 
@@ -53,4 +49,7 @@ public class Cliente {
 
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Produto> produtos;
+
+    @OneToOne(mappedBy = "cliente")
+    private Usuario usuario;
 }

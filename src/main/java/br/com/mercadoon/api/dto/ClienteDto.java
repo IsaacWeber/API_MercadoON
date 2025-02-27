@@ -20,4 +20,5 @@ public class ClienteDto {
     private String email;
     private String endereco;
     private Date membroDesde;
+    private UsuarioResumoDto usuario;
 }

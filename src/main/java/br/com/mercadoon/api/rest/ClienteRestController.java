@@ -31,9 +31,9 @@ public class ClienteRestController {
         return clienteService.buscar(id);
     }
 
-    @PostMapping
-    public ResponseEntity<ClienteDto> add(@Valid @RequestBody Cliente cliente) {
-        return new ResponseEntity<>(clienteService.add(cliente), HttpStatus.CREATED);
+    @PostMapping("/{usuarioId}")
+    public ResponseEntity<ClienteDto> add(@Valid @RequestBody Cliente cliente, @PathVariable Long usuarioId) {
+        return new ResponseEntity<>(clienteService.add(cliente, usuarioId), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
