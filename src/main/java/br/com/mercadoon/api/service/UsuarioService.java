@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class UsuarioService implements UserDetailsService {
@@ -31,11 +32,38 @@ public class UsuarioService implements UserDetailsService {
         this.encoder = new BCryptPasswordEncoder(12);
     }
 
-    public List<Usuario> listar() {
-        return usuarioRepository.findAll();
+    public List<UsuarioDto> listar() {
+        return usuarioRepository.findAll()
+                                .stream()
+                                .map(u -> modelMapper.map(u, UsuarioDto.class))
+                                .collect(Collectors.toList());
     }
 
 
+
+
+    public UsuarioDto buscar(Long id) {
+        return modelMapper.map(
+                    usuarioRepository.findById(id)
+                    .orElseThrow(() -> new UsuarioNotFoundException("Usuário não encontrado para id = " + id)),
+                UsuarioDto.class);
+    }
+
+    public UsuarioDto atualizar(Long id, Usuario novoUsuario) {
+        Usuario bdUsuario = usuarioRepository.findById(id)
+                                            .orElseThrow(() -> new UsuarioNotFoundException("Usuário não encontrado para id = " + id));
+        bdUsuario.setEmail(novoUsuario.getEmail());
+        return modelMapper.map(usuarioRepository.save(bdUsuario), UsuarioDto.class);
+    }
+
+
+    public UsuarioDto add(Usuario usuario) {
+        usuario.setId(null);
+        usuario.setSenha(encoder.encode(usuario.getSenha()));
+        return modelMapper.map(usuarioRepository.save(usuario), UsuarioDto.class);
+    }
+
+    // User Details
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Usuario usuario = usuarioRepository.findByEmail(email);
@@ -47,17 +75,12 @@ public class UsuarioService implements UserDetailsService {
         return new CustomUserDetails(usuario);
     }
 
-    public UsuarioDto buscar(Long id) {
-        return modelMapper.map(
-                    usuarioRepository.findById(id)
-                    .orElseThrow(() -> new UsuarioNotFoundException("Usuário não encontrado para id = " + id)),
-                UsuarioDto.class);
+    public void deletar(Long id) {
+        usuarioRepository.deleteById(id);
     }
 
-    public UsuarioDto add(Usuario usuario) {
-        usuario.setId(null);
-        usuario.setSenha(encoder.encode(usuario.getSenha()));
-        return modelMapper.map(usuarioRepository.save(usuario), UsuarioDto.class);
+    public void deletarTodos() {
+        usuarioRepository.deleteAll();
     }
 
     class CustomUserDetails implements UserDetails {

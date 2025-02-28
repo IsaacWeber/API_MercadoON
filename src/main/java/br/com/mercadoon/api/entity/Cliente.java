@@ -26,14 +26,6 @@ public class Cliente {
     @NotEmpty(message = "Sobrenome não pode estar vazio.")
     private String sobrenome;
 
-    @Column(name="cpf")
-    @NotEmpty(message = "CPF não pode estar vazio.")
-    private String cpf;
-
-    @Column(name="email")
-    @NotEmpty(message = "E-mail não pode estar vazio.")
-    private String email;
-
     @Column(name="endereco")
     @NotEmpty(message = "Endereço não pode estar vazio.")
     private String endereco;
@@ -50,6 +42,6 @@ public class Cliente {
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Produto> produtos;
 
-    @OneToOne(mappedBy = "cliente")
+    @OneToOne(mappedBy = "cliente", cascade = { CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH })
     private Usuario usuario;
 }

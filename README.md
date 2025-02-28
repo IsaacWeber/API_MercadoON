@@ -1,4 +1,80 @@
 ## API E-Commerce | Mercado ON
+### USUÁRIO
+
+* **Listar**
+```http
+  GET /api/usuario
+```
+
+| Descrição               |
+:------------------------|
+| Lista todos os usuários |
+
+* **Buscar**
+
+```http
+  GET /api/usuario/{id}
+```
+
+| Parâmetro | Tipo     | Descrição              |
+| :-------- | :------- |:-----------------------|
+| `id`      | `string` | Busca usuário por `id` |
+
+* **Adicionar**
+
+```http
+  POST /api/usuario/{id}
+```
+
+
+| Parâmetro 1 | Tipo     | Parâmetro 2      | Tipo  | Descrição                                                   | 
+|:------------|:---------|:-----------------| :------- |:-----------|
+| `usuarioId` | `string` | `Body`      | `JSON` | Cadastra usuário |
+
+
+_Exemplo **Body**_
+```json
+{
+  "email": "general@email.com",
+  "senha": "b@123"
+}
+```
+
+* **Atualizar**
+
+```http
+  PUT /api/usuario/{id}
+```
+
+| Parâmetro 1 | Tipo | Parâmetro 2 |Tipo     | Descrição                 |
+| :-------- | :------ | :------- | :-------------------------------- |:--------------------------|
+| `id`      | `string` | `Body`|`JSON` | Atualiza usuário por `id` |
+
+_Exemplo **Body**_
+```json
+{
+  "email": "maicom@email.com"
+}
+```
+
+* **Deletar**
+
+```http
+  DELETE /api/usuario/{id}
+```
+
+| Parâmetro | Tipo     | Descrição               |
+| :-------- | :------- |:------------------------|
+| `id`      | `string` | Deleta usuário por `id` |
+
+* **Deletar Todos**
+```http
+  DELETE /api/usuario
+```
+
+| Descrição                |
+:-------------------------|
+| Deleta todos os usuários |
 
 ### CLIENTE
 
@@ -24,13 +100,13 @@
 * **Adicionar**
 
 ```http
-  POST /api/cliente
+  POST /api/cliente/{usuarioId}
 ```
 
 
-| Parâmetro | Tipo     | Descrição                       | 
-| :-------- | :------- | :-------------------------------- |
-| `Body`      | `JSON` | Cadastra cliente |
+| Parâmetro 1 | Tipo     | Parâmetro 2      | Tipo  | Descrição                                                 | 
+|:------------|:---------|:-----------------| :------- |:----------------------------------------------------------|
+| `usuarioId` | `string` | `Body`      | `JSON` | Cadastra cliente com o usuário especificado por `usuarioId` |
 
 
 _Exemplo **Body**_
@@ -38,10 +114,7 @@ _Exemplo **Body**_
 {
     "nome": "Laura",
     "sobrenome": "Ferreira",
-    "cpf": "23411",
-    "email": "laura.ferreira@email.com",
-    "endereco": "Brasília/DF",
-    "senha": "@laura32"
+    "endereco": "Brasília/DF"
 }
 ```
 
@@ -60,10 +133,7 @@ _Exemplo **Body**_
 {
     "nome": "Laura",
     "sobrenome": "da Silva",
-    "cpf": "3241",
-    "email": "laura.da.silva@email.com",
-    "endereco": "Santos/SP",
-    "senha": "@laura155"
+    "endereco": "Santos/SP"
 }
 ```
 

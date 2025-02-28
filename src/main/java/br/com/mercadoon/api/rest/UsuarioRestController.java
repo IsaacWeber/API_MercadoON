@@ -22,7 +22,7 @@ public class UsuarioRestController {
     }
 
     @GetMapping
-    public List<Usuario> listar() {
+    public List<UsuarioDto> listar() {
         return usuarioService.listar();
     }
 
@@ -36,4 +36,20 @@ public class UsuarioRestController {
         return new ResponseEntity<>(usuarioService.add(usuario), HttpStatus.CREATED);
     }
 
+    @PutMapping("/{id}")
+    public UsuarioDto atualizar(@PathVariable Long id, @RequestBody Usuario usuario) {
+        return usuarioService.atualizar(id, usuario);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
+        usuarioService.deletar(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> deletarTodos() {
+        usuarioService.deletarTodos();
+        return ResponseEntity.noContent().build();
+    }
 }

@@ -4,6 +4,7 @@ import br.com.mercadoon.api.dto.ClienteDto;
 import br.com.mercadoon.api.entity.Cliente;
 import br.com.mercadoon.api.entity.Usuario;
 import br.com.mercadoon.api.exception.ClienteNotFoundException;
+import br.com.mercadoon.api.exception.UsuarioException;
 import br.com.mercadoon.api.exception.UsuarioNotFoundException;
 import br.com.mercadoon.api.repository.ClienteRepository;
 import br.com.mercadoon.api.repository.UsuarioRepository;
@@ -46,6 +47,10 @@ public class ClienteService {
         Usuario usuario = usuarioRepository.findById(usuarioId)
                                             .orElseThrow(() -> new UsuarioNotFoundException("Usuário não encontrado para id = " + usuarioId));
 
+        if(usuario.getCliente() != null) {
+            throw new UsuarioException("Usuário de id = " + usuarioId + " já possui cliente.");
+        }
+
         cliente.setId(null);
         cliente.setMembroDesde(new Date(System.currentTimeMillis()));
 
@@ -53,6 +58,7 @@ public class ClienteService {
             cliente.getCartoes().forEach(c -> c.setCliente(cliente));
 
         cliente.setUsuario(usuario);
+        usuario.setCliente(cliente);
 
         return modelMapper.map(clienteRepository.save(cliente), ClienteDto.class);
     }
