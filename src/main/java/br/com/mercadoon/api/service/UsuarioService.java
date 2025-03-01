@@ -39,14 +39,17 @@ public class UsuarioService implements UserDetailsService {
                                 .collect(Collectors.toList());
     }
 
-
-
-
     public UsuarioDto buscar(Long id) {
         return modelMapper.map(
                     usuarioRepository.findById(id)
                     .orElseThrow(() -> new UsuarioNotFoundException("Usuário não encontrado para id = " + id)),
                 UsuarioDto.class);
+    }
+
+    public UsuarioDto add(Usuario usuario) {
+        usuario.setId(null);
+        usuario.setSenha(encoder.encode(usuario.getSenha()));
+        return modelMapper.map(usuarioRepository.save(usuario), UsuarioDto.class);
     }
 
     public UsuarioDto atualizar(Long id, Usuario novoUsuario) {
@@ -56,11 +59,15 @@ public class UsuarioService implements UserDetailsService {
         return modelMapper.map(usuarioRepository.save(bdUsuario), UsuarioDto.class);
     }
 
+    public void deletar(Long id) {
+        Usuario bdUsuario = usuarioRepository.findById(id)
+                .orElseThrow(() -> new UsuarioNotFoundException("Usuário não encontrado para id = " + id));
 
-    public UsuarioDto add(Usuario usuario) {
-        usuario.setId(null);
-        usuario.setSenha(encoder.encode(usuario.getSenha()));
-        return modelMapper.map(usuarioRepository.save(usuario), UsuarioDto.class);
+        usuarioRepository.deleteById(id);
+    }
+
+    public void deletarTodos() {
+        usuarioRepository.deleteAll();
     }
 
     // User Details
@@ -73,14 +80,6 @@ public class UsuarioService implements UserDetailsService {
         }
 
         return new CustomUserDetails(usuario);
-    }
-
-    public void deletar(Long id) {
-        usuarioRepository.deleteById(id);
-    }
-
-    public void deletarTodos() {
-        usuarioRepository.deleteAll();
     }
 
     class CustomUserDetails implements UserDetails {

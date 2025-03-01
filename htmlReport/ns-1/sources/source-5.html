@@ -1,0 +1,161 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > ProdutoRestController</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">br.com.mercadoon.api.rest</a>
+</div>
+
+<h1>Coverage Summary for Class: ProdutoRestController (br.com.mercadoon.api.rest)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ProdutoRestController</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    14.3%
+  </span>
+  <span class="absValue">
+    (1/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    20%
+  </span>
+  <span class="absValue">
+    (2/10)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package br.com.mercadoon.api.rest;
+&nbsp;
+&nbsp;import br.com.mercadoon.api.dto.ProdutoDto;
+&nbsp;import br.com.mercadoon.api.entity.Produto;
+&nbsp;import br.com.mercadoon.api.service.ProdutoService;
+&nbsp;import jakarta.validation.Valid;
+&nbsp;import org.springframework.beans.factory.annotation.Autowired;
+&nbsp;import org.springframework.http.HttpStatus;
+&nbsp;import org.springframework.http.ResponseEntity;
+&nbsp;import org.springframework.web.bind.annotation.*;
+&nbsp;import org.springframework.web.multipart.MultipartFile;
+&nbsp;
+&nbsp;import java.util.List;
+&nbsp;
+&nbsp;@RestController
+&nbsp;@RequestMapping(&quot;/api/produto&quot;)
+&nbsp;public class ProdutoRestController {
+&nbsp;    private ProdutoService produtoService;
+&nbsp;
+&nbsp;    @Autowired
+<b class="fc">&nbsp;    public ProdutoRestController(ProdutoService produtoService) {</b>
+<b class="fc">&nbsp;        this.produtoService = produtoService;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping
+&nbsp;    public List&lt;ProdutoDto&gt; listar() {
+<b class="nc">&nbsp;        return produtoService.listar();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @GetMapping(&quot;/{id}&quot;)
+&nbsp;    public ProdutoDto buscar(@PathVariable Long id) {
+<b class="nc">&nbsp;        return produtoService.buscar(id);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PostMapping(&quot;/{clienteId}&quot;)
+&nbsp;    public ResponseEntity&lt;ProdutoDto&gt; add(@PathVariable Long clienteId, @Valid @RequestBody Produto produto) {
+<b class="nc">&nbsp;        return new ResponseEntity&lt;&gt;(produtoService.add(clienteId, produto), HttpStatus.CREATED);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @PutMapping(&quot;/{id}&quot;)
+&nbsp;    public ProdutoDto atualizar(@PathVariable Long id, @Valid @RequestBody Produto produto) {
+<b class="nc">&nbsp;        return produtoService.atualizar(id, produto);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @DeleteMapping(&quot;/{id}&quot;)
+&nbsp;    public ResponseEntity&lt;Void&gt; deletar(@PathVariable Long id) {
+<b class="nc">&nbsp;        produtoService.deletar(id);</b>
+<b class="nc">&nbsp;        return ResponseEntity.noContent().build();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @DeleteMapping
+&nbsp;    public ResponseEntity&lt;Void&gt; deletarTodos() {
+<b class="nc">&nbsp;        produtoService.deletarTodos();</b>
+<b class="nc">&nbsp;        return ResponseEntity.noContent().build();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2025-03-01 15:24</div>
+</div>
+</body>
+</html>
