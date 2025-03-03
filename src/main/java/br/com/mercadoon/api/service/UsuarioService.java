@@ -82,7 +82,7 @@ public class UsuarioService implements UserDetailsService {
         return new CustomUserDetails(usuario);
     }
 
-    class CustomUserDetails implements UserDetails {
+    public class CustomUserDetails implements UserDetails {
 
         private Usuario usuario;
 
